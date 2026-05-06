@@ -137,6 +137,8 @@ function CardItem({ card, assignments, onEdit, onError, onRefresh, refreshTrigge
       <div className="flex items-center gap-4 mb-3 flex-wrap">
         <div className="flex items-center gap-1.5">
           <svg className="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z" /></svg>
+          <span className="text-xs text-slate-500">Start <span className="font-medium text-slate-700">{formatDate(card.Start_Date)}</span></span>
+          <svg className="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z" /></svg>
           <span className="text-xs text-slate-500">Due <span className="font-medium text-slate-700">{formatDate(card.Due_Date)}</span></span>
         </div>
         {card.Duration !== null && card.Duration !== undefined && (
@@ -622,13 +624,6 @@ export default function App() {
           refreshTrigger={globalRefreshToggle} 
         />
       </main>
-      
-      <footer className="border-t border-slate-200 bg-white mt-8 py-4 px-6">
-        <div className="max-w-screen-xl mx-auto flex items-center justify-between">
-          <p className="text-xs text-slate-400">TaskFlow Dashboard · Board <span className="font-medium text-slate-500">#{BOARD_ID}</span> · User <span className="font-medium text-slate-500">#{USER_ID}</span></p>
-          <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /><span className="text-xs text-slate-400">Connected to MySQL Backend</span></div>
-        </div>
-      </footer>
     </div>
   );
 }
