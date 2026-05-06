@@ -119,7 +119,7 @@ function CardItem({ card, assignments, onEdit, onError, onRefresh, refreshTrigge
           <div className="mt-0.5 w-2.5 h-2.5 rounded-full bg-blue-500 flex-shrink-0 ring-2 ring-blue-100" />
           <div className="min-w-0">
             <h3 className="text-sm font-semibold text-slate-800 truncate leading-snug">
-              {card.Card_Title || card.Card_Name || `Card #${card.Card_ID}`}
+              {card.Card_Title || `Card #${card.Card_ID}`}
             </h3>
             <p className="text-xs text-slate-400 mt-0.5">ID: {card.Card_ID}</p>
           </div>
@@ -170,10 +170,10 @@ function CardItem({ card, assignments, onEdit, onError, onRefresh, refreshTrigge
   );
 }
 
-function AddCardForm({ boardId, onRefresh, onError }) {
+function AddCardForm({onRefresh, onError }) {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState({ title: "", name: "", desc: "", startDate: "", dueDate: "", listId: "" });
+  const [form, setForm] = useState({ title: "", desc: "", startDate: "", dueDate: "", listId: "" });
   const set = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
 
   async function handleSubmit() {
@@ -184,8 +184,7 @@ function AddCardForm({ boardId, onRefresh, onError }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title: form.title.trim(),
-          name: form.name || "",      
+          title: form.title.trim(),      
           description: form.desc || "",
           startDate: form.startDate || null,
           dueDate: form.dueDate || null,
@@ -194,7 +193,7 @@ function AddCardForm({ boardId, onRefresh, onError }) {
       });
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || `HTTP ${res.status}`);
       onRefresh();
-      setForm({title: "", name: "", desc: "", startDate: "", dueDate: "", listId: ""});
+      setForm({title: "", desc: "", startDate: "", dueDate: "", listId: ""});
       setOpen(false);
     } catch (err) {
       onError(err.message);
@@ -227,7 +226,6 @@ function AddCardForm({ boardId, onRefresh, onError }) {
             <input type="date" value={form.dueDate} onChange={set("dueDate")} className="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
           </div>
         </div>
-        <input type="text" placeholder="Card Name" value={form.name} onChange={set("name")} className="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-400" />
         <textarea placeholder="Description" value={form.desc} onChange={set("desc")} className="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-400" />
         <input type="number" placeholder="List ID *" value={form.listId} onChange={set("listId")} className="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder:text-slate-400" />
         <button onClick={handleSubmit} disabled={saving} className="w-full py-2 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors disabled:opacity-50 shadow-sm">
@@ -565,7 +563,7 @@ function CardsSection({ boardId, onError, onGlobalRefresh, refreshTrigger }) {
     loadBoardData();
   }, [boardId, refreshTrigger, onError]);
 
-  const filtered = search.trim() ? cards.filter((c) => (c.Card_Title || c.Card_Name || "").toLowerCase().includes(search.toLowerCase())) : cards;
+  const filtered = search.trim() ? cards.filter((c) => (c.Card_Title || "").toLowerCase().includes(search.toLowerCase())) : cards;
 
   return (
     <div className="flex-1 min-w-0 flex flex-col gap-4">
@@ -580,7 +578,7 @@ function CardsSection({ boardId, onError, onGlobalRefresh, refreshTrigger }) {
         </div>
       </div>
 
-      <AddCardForm boardId={boardId} onRefresh={onGlobalRefresh} onError={onError} />
+      <AddCardForm onRefresh={onGlobalRefresh} onError={onError} />
 
       {loading ? (
         <div className="space-y-3">{[1, 2, 3].map((i) => (<div key={i} className="bg-white rounded-xl border border-slate-200 p-4 animate-pulse"><div className="h-3.5 bg-slate-100 rounded-full w-2/3 mb-3" /><div className="h-2 bg-slate-100 rounded-full w-full" /></div>))}</div>
