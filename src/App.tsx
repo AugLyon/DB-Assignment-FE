@@ -431,14 +431,6 @@ function ListStatsSidebar({ boardId, onError }) {
   return (
     <aside className="w-72 flex-shrink-0 space-y-4">
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-sm">
-            <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" /></svg>
-          </div>
-          <div><p className="text-xs text-slate-400">Current Context</p><p className="text-sm font-semibold text-slate-700">Sprint 42</p></div>
-        </div>
-      </div>
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
         <h2 className="text-sm font-semibold text-slate-700 mb-3">Board Team</h2>
         <div className="flex flex-wrap gap-2">
           {members.map(m => (
